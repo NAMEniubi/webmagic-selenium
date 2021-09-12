@@ -1,4 +1,5 @@
 package com.github.nameniubi.spider.selenium;
+import com.github.nameniubi.spider.cofing.SeleniumProperties;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -56,11 +57,11 @@ public class WebDriverPool {
 
     /**
      * 从队列中获取一个WebDriver，已有的Driver小于配置容量则创建
-     * 新的ChromeDriver默认等待5秒加载时间
+     * 新的ChromeDriver默认等待3秒加载时间
      * @return
      * @throws InterruptedException
      */
-    public WebDriver get(Properties properties) throws InterruptedException {
+    public WebDriver get(SeleniumProperties properties) throws InterruptedException {
         checkRunning();
         WebDriver poll = innerQueue.poll();
         if (poll != null) {
@@ -70,14 +71,17 @@ public class WebDriverPool {
             synchronized (webDriverList) {
                 if (webDriverList.size() < capacity) {
                     ChromeOptions chromeOptions = new ChromeOptions();
-                    chromeOptions.setBinary(properties.getProperty("webdriver.chrome.path"));
+                    chromeOptions.setBinary(properties.getAppPath());
+                    if (properties.isHeadless()){
+                        chromeOptions.addArguments("--headless");
+                        chromeOptions.addArguments("--disable-gpu");
+                    }
                     ChromeDriver chromeDriver = new ChromeDriver(chromeOptions);
-                    chromeDriver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+                    chromeDriver.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
                     innerQueue.add(chromeDriver);
                     webDriverList.add(chromeDriver);
                 }
             }
-
         }
         return innerQueue.take();
     }

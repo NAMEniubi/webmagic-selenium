@@ -1,4 +1,4 @@
-package com.github.nameniubi.spider.processors;
+package com.github.nameniubi.demo.processors;
 
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.thread.ThreadUtil;

@@ -1,4 +1,4 @@
-package com.github.nameniubi.spider.pipeline;
+package com.github.nameniubi.demo.pipeline;
 
 
 import cn.hutool.log.StaticLog;

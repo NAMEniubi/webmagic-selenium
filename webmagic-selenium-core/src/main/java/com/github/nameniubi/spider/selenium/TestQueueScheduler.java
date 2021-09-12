@@ -12,7 +12,7 @@ import java.util.LinkedList;
  * @Create: 2021-09-09 19:31
  */
 public class TestQueueScheduler implements Scheduler {
-    LinkedList<Request> list = new LinkedList<>();
+    private LinkedList<Request> list = new LinkedList<>();
     @Override
     public void push(Request request, Task task) {
 

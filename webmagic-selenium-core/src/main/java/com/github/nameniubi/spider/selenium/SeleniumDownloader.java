@@ -1,6 +1,8 @@
 package com.github.nameniubi.spider.selenium;
 import cn.hutool.core.thread.ThreadUtil;
 import cn.hutool.core.util.StrUtil;
+import com.github.nameniubi.spider.cofing.DriverType;
+import com.github.nameniubi.spider.cofing.SeleniumProperties;
 import com.sun.javafx.fxml.PropertyNotFoundException;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -39,7 +41,7 @@ public class SeleniumDownloader implements Downloader, Closeable {
 
     private int poolSize = 1;
 
-    protected Properties properties ;
+    protected SeleniumProperties properties ;
 
     private BiConsumer consumerFun;
 
@@ -51,22 +53,19 @@ public class SeleniumDownloader implements Downloader, Closeable {
     *@author: yangf
     *@date: 2021/9/9 11:24
     */
-    public SeleniumDownloader( final Properties properties) {
+    public SeleniumDownloader( final SeleniumProperties properties) {
         if (null == properties){
             throw new PropertyNotFoundException("properties配置为空");
         }
         this.properties = properties;
-        String driverName = properties.getProperty("driver", "chrome");
-        if ("chrome".equals(driverName)){
-            String driver = properties.getProperty("webdriver.chrome.driver", "");
-            if (StrUtil.isBlank(driver)){
+        if (DriverType.Chrome.compareTo(properties.getDriver()) == 0){
+            if (StrUtil.isBlank(properties.getDriverPath())){
                 throw new PropertyNotFoundException("未配置chrome驱动,需要下载chrome驱动并配置,下载地址： http://npm.taobao.org/mirrors/chromedriver/");
             }
-            String path = properties.getProperty("webdriver.chrome.path", "");
-            if (StrUtil.isBlank(path)){
-                throw new PropertyNotFoundException("未配置chrome程序路径, 列：C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrone.exe");
+            if (StrUtil.isBlank(properties.getAppPath())){
+                throw new PropertyNotFoundException("未配置chrome程序路径, 列：C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
             }
-            System.setProperty("webdriver.chrome.driver", driver);
+            System.setProperty("webdriver.chrome.driver", properties.getDriverPath());
         }else {
             throw new PropertyNotFoundException("目前只支持chrome");
         }
