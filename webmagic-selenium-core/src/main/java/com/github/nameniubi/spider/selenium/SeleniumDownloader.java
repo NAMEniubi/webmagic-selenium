@@ -20,7 +20,6 @@ import us.codecraft.webmagic.selector.PlainText;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 import java.util.function.BiConsumer;
 
@@ -62,10 +61,13 @@ public class SeleniumDownloader implements Downloader, Closeable {
             if (StrUtil.isBlank(properties.getDriverPath())){
                 throw new PropertyNotFoundException("未配置chrome驱动,需要下载chrome驱动并配置,下载地址： http://npm.taobao.org/mirrors/chromedriver/");
             }
-            if (StrUtil.isBlank(properties.getAppPath())){
+            if (properties.getDriverPath().startsWith("http")){
+
+            }else if (StrUtil.isBlank(properties.getAppPath())){
                 throw new PropertyNotFoundException("未配置chrome程序路径, 列：C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+            }else {
+                System.setProperty("webdriver.chrome.driver", properties.getDriverPath());
             }
-            System.setProperty("webdriver.chrome.driver", properties.getDriverPath());
         }else {
             throw new PropertyNotFoundException("目前只支持chrome");
         }

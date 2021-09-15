@@ -16,15 +16,17 @@ import com.github.nameniubi.demo.pipeline.FeijingItemApiPipeline;
  */
 
 public class TestMain {
-    private static String URL = "https://v1.feijing88.com/doc/list?productId=29&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNzVmx2WnlkUDJqa05iRkFyeE1vdTNhbjJTZEpEdEpRMFdXaWhRTkdxeHFHWkRGbUdCMlZVajNaUFFyM1hLUTgiLCJpYXQiOjE2MzA1NjE3MzJ9.i8sofa-g8twHi-rj3NeJzfIqXG_zlvNivwCZGNaQa2o";
+//    private static String URL = "https://v1.feijing88.com/doc/list?productId=29&token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbiI6ImNzVmx2WnlkUDJqa05iRkFyeE1vdTNhbjJTZEpEdEpRMFdXaWhRTkdxeHFHWkRGbUdCMlZVajNaUFFyM1hLUTgiLCJpYXQiOjE2MzA1NjE3MzJ9.i8sofa-g8twHi-rj3NeJzfIqXG_zlvNivwCZGNaQa2o";
+    private static String URL = "https://view.lixingyong.com/category/Illustration";
 
     public static void main(String[] args) {
         StaticLog.info("爬虫启动。。。。");
-
         SeleniumProperties seleniumProperties = new SeleniumProperties(){{
             setDriver(DriverType.Chrome);
-            setDriverPath("D:\\develop\\project\\PyCharm\\chromedriver.exe");
-            setAppPath("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+//            setDriverPath("D:\\develop\\project\\PyCharm\\chromedriver.exe");
+//            setAppPath("C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe");
+            setDriverPath("D:\\tool\\chromedriver.exe");
+            setAppPath("C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrone.exe");
             setHeadless(false);
         }};
         FeijingItemApiProcessor feijingItemApiProcessor = new FeijingItemApiProcessor();
